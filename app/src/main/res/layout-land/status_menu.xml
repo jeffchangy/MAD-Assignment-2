@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:id="@+id/detail_button"
+            android:layout_width="73dp"
+            android:layout_height="40dp"
+            android:text="Details"
+            android:textSize="10dp"
+            app:layout_constraintHorizontal_bias="0.545"
+            app:layout_constraintLeft_toRightOf="@id/next_day_button"
+            app:layout_constraintRight_toLeftOf="@id/demolish_button"
+            app:layout_constraintTop_toBottomOf="@id/text_curr_temp" />
+
+        <TextView
+            android:id="@+id/text_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/time_elapsed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time Elapsed:"
+            app:layout_constraintBottom_toTopOf="@id/text_game_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/real_time"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Chronometer
+            android:id="@+id/real_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/text_game_time"
+            app:layout_constraintLeft_toRightOf="@id/time_elapsed"
+            app:layout_constraintRight_toLeftOf="@id/text_city_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/text_game_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Game Time:"
+            app:layout_constraintHorizontal_bias="0.326"
+            app:layout_constraintLeft_toRightOf="@id/text_city_name"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_curr_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Money:"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/text_current_population"
+            app:layout_constraintTop_toBottomOf="@id/time_elapsed"
+            tools:layout_editor_absoluteY="35dp" />
+
+        <TextView
+            android:id="@+id/text_current_population"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Population:"
+            app:layout_constraintLeft_toRightOf="@id/text_curr_money"
+            app:layout_constraintRight_toLeftOf="@id/text_curr_temp"
+            app:layout_constraintTop_toBottomOf="@id/real_time"
+            tools:layout_editor_absoluteY="35dp" />
+
+        <TextView
+            android:id="@+id/text_employment_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Employment Rate:"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toRightOf="@id/text_curr_temp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_game_time"
+            tools:layout_editor_absoluteY="35dp" />
+
+        <TextView
+            android:id="@+id/text_curr_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Temperature:"
+            app:layout_constraintHorizontal_bias="0.066"
+            app:layout_constraintLeft_toRightOf="@id/text_current_population"
+            app:layout_constraintRight_toLeftOf="@id/text_employment_rate"
+            app:layout_constraintTop_toBottomOf="@id/text_city_name"
+            tools:layout_editor_absoluteY="35dp" />
+
+        <Button
+            android:id="@+id/next_day_button"
+            android:layout_width="73dp"
+            android:layout_height="40dp"
+            android:text="Next Day"
+            android:textSize="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_employment_rate"
+            app:layout_constraintRight_toLeftOf="@id/detail_button"/>
+
+        <Button
+            android:id="@+id/demolish_button"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="96dp"
+            android:text="Demolish"
+            android:textSize="10dp"
+            app:layout_constraintLeft_toRightOf="@id/detail_button"
+            app:layout_constraintRight_toLeftOf="@id/save_button"
+            app:layout_constraintTop_toBottomOf="@id/text_employment_rate"
+
+            />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="save"
+            android:textSize="10dp"
+            tools:layout_editor_absoluteX="197dp"
+            tools:layout_editor_absoluteY="109dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/demolish_button"
+            app:layout_constraintTop_toBottomOf="@id/text_employment_rate"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
