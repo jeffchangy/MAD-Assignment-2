@@ -14,7 +14,7 @@ import com.example.madassignment2.database.GameSchema;
 import java.util.ArrayList;
 import java.util.List;
 
-//STORES GAME DATA, everything to do this the game specifically
+//STORES GAME DATA, everything to do this the game specifically it is a fat singleton
 public class GameData {
 
     //DECLARATIONS
@@ -26,10 +26,11 @@ public class GameData {
     private GameElement selectedElement;
     int money, row, col;
     int gameTime, population, nRes, nComm;
-    String cityName;
+    String cityName, type;
     double employmentRate;
     Context context;
-
+    int position, structureId;
+    StructureData drawables;
 
     private GameData() {
         set = new Setting(50,10,1000);
@@ -40,7 +41,6 @@ public class GameData {
     public GameData(int gameTime, int population, int nRes, int nComm, String cityName, double employmentRate) {
         this.gameTime = gameTime;
         this.population = population;
-        //this.nextDay = nextDay;
         this.nRes = nRes;
         this.nComm = nComm;
         this.cityName = cityName;
@@ -54,17 +54,6 @@ public class GameData {
         return instance;
 }
 
-    //not in use anymore lol
-    /*    public void generateGrid() {
-        //create drawable gameElements to allow image input
-        grid = new GameElement[set.getMapWidth()][set.getMapHeight()];
-        for (int i = 0; i < set.getMapWidth(); i++) {
-            for (int j = 0; j < set.getMapHeight(); j++) {
-                grid[i][j] = new GameElement(null, null, null);
-            }
-        }
-    }*/
-
     //stores GameElement into an ArrayList
     public void generateGrid() {
         grid = new ArrayList<GameElement>();
@@ -73,6 +62,7 @@ public class GameData {
         }
     }
 
+    //getters for singleton
     public List<GameElement> getGrid() { return grid; }
     public GameElement get(int i) {
         return grid.get(i);
@@ -86,7 +76,7 @@ public class GameData {
     public void setMoney(int money) { this.money = money; }
     public int getMoney() { return money; }
 
-    //add to database in cursor
+    //add to database in cursor for status menu gettrs/setters
     public int getCurrMoney() { return money; }
     public int getGameTime() { return gameTime; }
     public String getCityName() { return cityName; }
@@ -107,7 +97,16 @@ public class GameData {
     public GameElement getSelectedElement() { return selectedElement; }
     public void setSelectedElement(GameElement selectedElement) { this.selectedElement = selectedElement; }
 
-    //public Structure getSelectedStructure() { return structure; }
+    public int getPosition() { return position; };
+    public void setPosition(int position) { this.position = GameData.get().getGrid().indexOf(position); }
+
+    public int getStructureId() { return structureId; }
+    public void setStructureId(int structureId) { this.structureId = structureId; }
+
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+
+    public Structure getSelectedStructure() { return structure; }
     public void setSelectedStructure(Structure structure) { this.structure = structure; }
 
     public int getRow() { return row; }
@@ -121,8 +120,10 @@ public class GameData {
     public void load(Context context) {
         this.db = new GameDbhelper(context.getApplicationContext()).getWritableDatabase();
     }
-    public void loadGameData() {
-        //List<GameData> list = new ArrayList<>();
+
+    //load method to move database data back into the game
+    public boolean loadGameData() {
+        boolean load = false;
         GameCursor cursor = new GameCursor(
                 db.query(GameSchema.StatusScreenTable.NAME,
                         null, null,null, null,null,null)
@@ -134,14 +135,16 @@ public class GameData {
                     cursor.getStatusMenuData();
                     cursor.moveToNext();
                 }
+                load = true;
             }
         }
         finally {
             cursor.close();
         }
+        return load;
     }
-    public void loadSettings() {
-        //List<GameData> list = new ArrayList<>();
+    public boolean loadSettings() {
+        boolean load = false;
         GameCursor cursor = new GameCursor(
                 db.query(GameSchema.SettingTable.NAME,
                         null, null,null, null,null,null)
@@ -151,6 +154,27 @@ public class GameData {
             if (instance != null) {
                 while (!cursor.isAfterLast()) {
                     cursor.getSetting();
+                    cursor.moveToNext();
+                }
+                load = true;
+            }
+        }
+        finally {
+            cursor.close();
+        }
+        return load;
+    }
+
+    public void loadMapData() {
+        GameCursor cursor = new GameCursor(
+                db.query(GameSchema.MapTable.NAME,
+                        null, null,null, null,null,null)
+        );
+        try {
+            cursor.moveToFirst();
+            if (instance != null ) {
+                while (!cursor.isAfterLast()) {
+                    cursor.getMapData();
                     cursor.moveToNext();
                 }
             }
@@ -170,7 +194,7 @@ public class GameData {
     }
     public void addStatusMenuData() {
         ContentValues cv = new ContentValues();
-        cv.put(GameSchema.StatusScreenTable.Cols.CITY_NAME, GameData.get().getCityName());
+        cv.put(GameSchema.StatusScreenTable.Cols.CITY_NAME, GameData.get().getSetting().getCityName());
         cv.put(GameSchema.StatusScreenTable.Cols.CURR_MONEY, GameData.get().getCurrMoney());
         cv.put(GameSchema.StatusScreenTable.Cols.EMPLOYMENT_RATE, GameData.get().getEmploymentRate());
         cv.put(GameSchema.StatusScreenTable.Cols.GAME_TIME, GameData.get().getGameTime());
@@ -181,13 +205,28 @@ public class GameData {
         db.insert(GameSchema.StatusScreenTable.NAME, null, cv);
     }
 
+    public void addMapData() {
+        for (int i = 0; i < getGrid().size(); i++) {
+            if (grid.get(i).getStructure() != null) {
+
+                ContentValues cv = new ContentValues();
+                cv.put(GameSchema.MapTable.Cols.TYPE, grid.get(i). getStructure().getType());
+                cv.put(GameSchema.MapTable.Cols.OWNER_NAME, grid.get(i).getOwnerName());
+                cv.put(GameSchema.MapTable.Cols.POSITION, i);
+
+                if (grid.get(i).getStructure() != null) {
+                    cv.put(GameSchema.MapTable.Cols.STRUCTURE, grid.get(i).getStructure().getDrawableId());
+                } else {
+                    cv.put(GameSchema.MapTable.Cols.STRUCTURE, 0);
+                }
+                db.insert(GameSchema.MapTable.NAME, null, cv);
+            }
+        }
+    }
+
     public void resetGame() {
         db.delete(GameSchema.StatusScreenTable.NAME, null,null );
         db.delete(GameSchema.SettingTable.NAME, null,null );
-    }
-
-    public void addMapData() {
-        ContentValues cv = new ContentValues();
-        //cv.put(GameSchema.MapTable.Cols.RES_BUILD, GameData.get().getGrid().indexOf());
+        db.delete(GameSchema.MapTable.NAME, null, null);
     }
 }

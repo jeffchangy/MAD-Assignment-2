@@ -39,7 +39,6 @@ public class FragmentSelect extends Fragment {
     public Structure getSelectedStructure() {
         return selectedStructure;
     }
-
     public void setSelectedStructure(Structure structure) {
         selectedStructure = structure;
     }

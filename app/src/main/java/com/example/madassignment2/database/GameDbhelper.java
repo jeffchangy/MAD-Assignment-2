@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.madassignment2.object.GameData;
+
 import java.lang.reflect.GenericArrayType;
 
 public class GameDbhelper extends SQLiteOpenHelper {
@@ -32,10 +34,10 @@ public class GameDbhelper extends SQLiteOpenHelper {
                 GameSchema.StatusScreenTable.Cols.NUM_COMM + " INTEGER)");
 
         db.execSQL("CREATE TABLE " + GameSchema.MapTable.NAME + "(" +
-                GameSchema.MapTable.Cols.RES_BUILD + " INTEGER, " +
-                GameSchema.MapTable.Cols.COMM_BUILD + " INTEGER, " +
-                GameSchema.MapTable.Cols.ROAD_BUILD + " INTEGER, " +
-                GameSchema.MapTable.Cols.THUMBNAIL + " BLOB)" );
+                GameSchema.MapTable.Cols.TYPE + " TEXT, " +
+                GameSchema.MapTable.Cols.POSITION + " INTEGER, " +
+                GameSchema.MapTable.Cols.OWNER_NAME + " TEXT, " +
+                GameSchema.MapTable.Cols.STRUCTURE + " INTEGER)");
     }
 
     @Override

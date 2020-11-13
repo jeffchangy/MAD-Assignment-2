@@ -60,10 +60,8 @@ public class FragmentMap extends Fragment {
     }
 
     private class MapAdapter extends RecyclerView.Adapter<MapHolder> {
-        //private GameElement[][] data;
 
         public MapAdapter() {
-            //this.data = GameData.get().getGrid();
         }
 
         @Override
@@ -74,8 +72,7 @@ public class FragmentMap extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MapHolder holder, int position) {
-            //int row = position % GameData.get().getSetting().getMapHeight();
-            //int col = position / GameData.get().getSetting().getMapHeight();
+            //gets position of the and imports into the bind method, knows where to allocate imageResources
             holder.bind(GameData.get().get(position));
         }
 
@@ -108,14 +105,17 @@ public class FragmentMap extends Fragment {
                 @Override
                 public void onClick(View view) {
                     if (fs.getSelectedStructure() != null && fStatus.getClick() == false && map.getStructure() == null) {
-                        //implement building must be adjacent to road before selection of other building, directly below this comment!!!
+                        //implement building must be adjacent to road before selection of other building
                         if (isAdjacent() == true || fs.getSelectedStructure().getType().equals(Structure.ROAD)) {
+                            //checks selected structure in selector fragment is equal to RES
                             if (fs.getSelectedStructure().getType().equals(Structure.RES)) {
                                 addResBuilding();
                                 nRes++;
+                                //checks selected structure in selector fragment is equal to COMM
                             } else if (fs.getSelectedStructure().getType().equals(Structure.COMM)) {
                                 addCommBuilding();
                                 nComm++;
+                                //checks selected structure in selector fragment is equal to ROAD
                             } else if (fs.getSelectedStructure().getType().equals(Structure.ROAD)) {
                                 addRoad();
                             }
@@ -229,8 +229,8 @@ public class FragmentMap extends Fragment {
 
 
         public void enterDetailScreenOnClick() {
-            Intent intent = new Intent();
 
+            Intent intent = new Intent();
             if (map.getStructure().getType().equals(Structure.RES) || map.getStructure().getType().equals(Structure.COMM) || map.getStructure().getType().equals(Structure.ROAD)) {
                 GameData.get().setSelectedElement(map);
                 GameData.get().setSelectedStructure(fs.getSelectedStructure());
@@ -243,6 +243,7 @@ public class FragmentMap extends Fragment {
             }
         }
 
+        //same logic with add building except that structure and image are set to null
         public void demolishBuilding() {
             if (map.getStructure().getType().equals(Structure.RES)) {
                 nRes--;
@@ -250,14 +251,12 @@ public class FragmentMap extends Fragment {
                 map.setImage(null);
                 imageStructure.setImageResource(0);
                 mapAdapter.notifyItemChanged(getAdapterPosition());
-                //System.out.println(nRes);
             } else if (map.getStructure().getType().equals(Structure.COMM)) {
                 nComm--;
                 map.setStructure(null);
                 map.setImage(null);
                 imageStructure.setImageResource(0);
                 mapAdapter.notifyItemChanged(getAdapterPosition());
-                //System.out.println(nComm);
             } else if (map.getStructure().getType().equals(Structure.ROAD)) {
                 map.setStructure(null);
                 map.setImage(null);
@@ -292,8 +291,8 @@ public class FragmentMap extends Fragment {
     public int getNComm() {
         return nComm;
     }
-
     public int getNRes() {
         return nRes;
     }
+
 }

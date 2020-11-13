@@ -137,8 +137,10 @@ public class FragmentStatus extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    //sets all needed statuses
+                    //sets all needed statuses, mapElements and settings
                     saveStatus();
+                    GameData.get().addSetting();
+                    GameData.get().addMapData();
                     Toast.makeText(getContext(), "Game Data Saved!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -183,6 +185,7 @@ public class FragmentStatus extends Fragment {
             currMoney.setText("Money: " + sMoney + " " + money);
     }
 
+
     //reference: https://www.youtube.com/watch?v=8-7Ip6xum6E
     public void findWeather() {
         String url = "https://api.openweathermap.org/data/2.5/weather?q=perth&appid=0e0c6f6314c3186b32492dabda6d2195&units=metric";
@@ -212,8 +215,6 @@ public class FragmentStatus extends Fragment {
 
     //sets all needed statuses
     public void saveStatus() {
-        //System.out.println("before setting" + GameData.get().getMoney());
-
         GameData.get().setCurrMoney(GameData.get().getMoney());
         GameData.get().setGameTime(nextDay);
         GameData.get().setCityName(GameData.get().getSetting().getCityName());
@@ -222,8 +223,6 @@ public class FragmentStatus extends Fragment {
         GameData.get().setnRes(map.getNRes());
         GameData.get().setnComm(map.getNComm());
         GameData.get().addStatusMenuData();
-
-        //System.out.println(GameData.get().getCurrMoney());
     }
 
     //GETTERS

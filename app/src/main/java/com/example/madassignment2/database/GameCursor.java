@@ -6,7 +6,9 @@ import android.widget.EditText;
 
 import com.example.madassignment2.fragment.FragmentStatus;
 import com.example.madassignment2.object.GameData;
+import com.example.madassignment2.object.GameElement;
 import com.example.madassignment2.object.Setting;
+import com.example.madassignment2.object.Structure;
 
 public class GameCursor extends CursorWrapper {
 
@@ -18,8 +20,8 @@ public class GameCursor extends CursorWrapper {
         int width = getInt(getColumnIndex(GameSchema.SettingTable.Cols.MAP_WIDTH));
         int height = getInt(getColumnIndex(GameSchema.SettingTable.Cols.MAP_HEIGHT));
         int money = getInt(getColumnIndex(GameSchema.SettingTable.Cols.STARTING_MONEY));
-        //return new Setting(width, height, money);
 
+        //set in getSetting.
         GameData.get().getSetting().setMapWidth(width);
         GameData.get().getSetting().setMapHeight(height);
         GameData.get().getSetting().setInitialMoney(money);
@@ -34,6 +36,7 @@ public class GameCursor extends CursorWrapper {
         int employmentRate = getInt(getColumnIndex(GameSchema.StatusScreenTable.Cols.EMPLOYMENT_RATE));
         int money = getInt(getColumnIndex(GameSchema.StatusScreenTable.Cols.CURR_MONEY));
 
+        //set in getStatus
         GameData.get().setGameTime(gameTime);
         GameData.get().setPopulation(population);
         GameData.get().setnRes(nRes);
@@ -43,7 +46,15 @@ public class GameCursor extends CursorWrapper {
         GameData.get().setMoney(money);
     }
 
+    //evidential that data saves into database, howver cannot output back onto the map screen
     public void getMapData() {
+        int position = getInt(getColumnIndex(GameSchema.MapTable.Cols.POSITION));
+        String label = getString(getColumnIndex(GameSchema.MapTable.Cols.OWNER_NAME));
+        int drawableId = getInt(getColumnIndex(GameSchema.MapTable.Cols.STRUCTURE));
+        String type = getString(getColumnIndex(GameSchema.MapTable.Cols.TYPE));
 
+        Structure newStructure = new Structure(type, drawableId, label);
+
+        GameData.get().getGrid().get(position).setStructure(newStructure);
     }
 }

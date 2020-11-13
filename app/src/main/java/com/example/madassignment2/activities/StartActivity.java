@@ -45,7 +45,7 @@ public class StartActivity  extends AppCompatActivity {
             fm.beginTransaction().add(R.id.map_screen, fragmentMap).commit();
         }
 
-
+        //setters to initialise the fragments to allow implementation inbtween fragments.
         fragmentMap.setSelectFragment(fragmentSelect);
         fragmentMap.setStatusFragment(fragmentStatus);
         fragmentStatus.setFragmentMap(fragmentMap);

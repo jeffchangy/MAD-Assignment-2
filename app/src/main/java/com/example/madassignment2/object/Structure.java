@@ -1,7 +1,7 @@
 package com.example.madassignment2.object;
 
 public class Structure {
-    private final int drawableId;
+    private int drawableId;
     private String label, type;
 
     public static final String ROAD = "road";
@@ -24,4 +24,6 @@ public class Structure {
     public String getLabel() { return label; }
 
     public void setLabel(String label) { this.label = label; }
+    public void setType(String type) { this.type = type; }
+    public void setDrawableId(int drawableId) { this.drawableId = drawableId; }
 }

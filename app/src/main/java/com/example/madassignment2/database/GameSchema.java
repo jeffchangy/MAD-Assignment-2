@@ -30,10 +30,10 @@ public class GameSchema {
         public static final String NAME = "MapScreen";
 
         public static class Cols {
-            public static final String RES_BUILD = "residential_building";
-            public static final String COMM_BUILD = "commercial_building";
-            public static final String ROAD_BUILD = "road_building";
-            public static final String THUMBNAIL = "image_building";
+            public static final String TYPE = "type";
+            public static final String POSITION = "position_building";
+            public static final String STRUCTURE = "structure_type"; //this is the drawable id lol
+            public static final String OWNER_NAME = "owner_name";
         }
     }
 }

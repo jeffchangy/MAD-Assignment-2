@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //initialises the database.
         GameData.get().load(getApplicationContext());
 
         startBtn = (Button) findViewById(R.id.button_start);
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //remove database input from previous load user wishes to start a new game.
+                GameData.get().resetGame();
                 Intent intent = new Intent(MainActivity.this, StartActivity.class);
                 startActivity(intent);
             }
@@ -74,10 +77,12 @@ public class MainActivity extends AppCompatActivity {
         loadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameData.get().loadGameData();
-                GameData.get().loadSettings();
-                Intent intent = new Intent(MainActivity.this, StartActivity.class);
-                startActivity(intent);
+                //load all data from database and output back into the game
+                if (GameData.get().loadGameData() && GameData.get().loadSettings() == true) {
+                    GameData.get().loadMapData();
+                    Intent intent = new Intent(MainActivity.this, StartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

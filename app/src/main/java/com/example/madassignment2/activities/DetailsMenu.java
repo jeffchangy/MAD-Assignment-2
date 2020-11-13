@@ -31,12 +31,9 @@ public class DetailsMenu extends AppCompatActivity {
     private Intent thumbnailPhotoIntent;
 
     private Bitmap thumbnail;
-    private Setting set;
-    private GameElement map;
-    private FragmentMap fMap;
     private TextView row, column, structureType;
     private EditText editableName;
-    private Button takePhotoBtn, applyBtn;
+    private Button takePhotoBtn, applyBtn, backBtn;
     private ImageView photoView;
 
 
@@ -52,6 +49,7 @@ public class DetailsMenu extends AppCompatActivity {
         takePhotoBtn = (Button) findViewById(R.id.photo_button);
         applyBtn = (Button) findViewById(R.id.apply_button);
         photoView = (ImageView) findViewById(R.id.show_image);
+        //backBtn = (Button) findViewById(R.id.back_button);
 
 
         //display all specifications
@@ -81,12 +79,23 @@ public class DetailsMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GameData.get().getSelectedElement().setOwnerName(editableName.getText().toString());
+                Intent intent = new Intent(DetailsMenu.this, StartActivity.class);
+                startActivity(intent);
                 //when finish is called, goes to onActivityResult in FragmentMap.
-                finish();
             }
         });
+
+/*        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameData.get().getSelectedElement().setOwnerName(editableName.getText().toString());
+                Intent intent = new Intent(DetailsMenu.this, StartActivity.class);
+                startActivity(intent);
+            }
+        });*/
     }
 
+    //onSave of the photo in the camera, will call this method to change thumbnail on mapFragment.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent result) {
         super.onActivityResult(requestCode, resultCode, result);

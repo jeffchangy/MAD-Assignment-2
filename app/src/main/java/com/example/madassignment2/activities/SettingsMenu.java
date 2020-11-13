@@ -27,8 +27,9 @@ public class SettingsMenu extends AppCompatActivity {
         editHeight = (EditText) findViewById(R.id.height_edit);
         editMoney = (EditText) findViewById(R.id.money_edit);
         editCityName = (EditText) findViewById(R.id.city_name_edit);
-
         exitBtn = (Button) findViewById(R.id.setting_exit);
+
+        //saves settings on exit.
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
