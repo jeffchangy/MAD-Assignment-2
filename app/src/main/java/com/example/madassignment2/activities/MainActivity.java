@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.madassignment2.database.GameDbhelper;
-import com.example.madassignment2.database.GameSchema;
 import com.example.madassignment2.object.GameData;
 import com.example.madassignment2.R;
 
@@ -54,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //make GameData instance null and then use get(), will generate a new grid
+                GameData.get().resetGame();
                 GameData.get().setInstance();
                 GameData.get();
 
@@ -75,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
         loadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameData.get().loadStatusMenu();
+                GameData.get().loadGameData();
+                GameData.get().loadSettings();
                 Intent intent = new Intent(MainActivity.this, StartActivity.class);
                 startActivity(intent);
             }

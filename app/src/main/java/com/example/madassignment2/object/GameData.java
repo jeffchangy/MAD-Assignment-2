@@ -121,20 +121,16 @@ public class GameData {
     public void load(Context context) {
         this.db = new GameDbhelper(context.getApplicationContext()).getWritableDatabase();
     }
-
-    public void loadStatusMenu() {
+    public void loadGameData() {
         //List<GameData> list = new ArrayList<>();
         GameCursor cursor = new GameCursor(
                 db.query(GameSchema.StatusScreenTable.NAME,
                         null, null,null, null,null,null)
         );
-        System.out.println("before try");
         try {
             cursor.moveToFirst();
             if (instance != null) {
-                System.out.println("in if");
                 while (!cursor.isAfterLast()) {
-                    System.out.println("in while");
                     cursor.getStatusMenuData();
                     cursor.moveToNext();
                 }
@@ -144,20 +140,34 @@ public class GameData {
             cursor.close();
         }
     }
-
-    public void addSetting(Setting set) {
-        ContentValues cv = new ContentValues();
-        cv.put(GameSchema.SettingTable.Cols.MAP_HEIGHT, set.getMapHeight());
-        cv.put(GameSchema.SettingTable.Cols.MAP_WIDTH, set.getMapWidth());
-        cv.put(GameSchema.SettingTable.Cols.STARTING_MONEY, set.getInitialMoney());
-        db.insert(GameSchema.SettingTable.NAME, null, cv);
+    public void loadSettings() {
+        //List<GameData> list = new ArrayList<>();
+        GameCursor cursor = new GameCursor(
+                db.query(GameSchema.SettingTable.NAME,
+                        null, null,null, null,null,null)
+        );
+        try {
+            cursor.moveToFirst();
+            if (instance != null) {
+                while (!cursor.isAfterLast()) {
+                    cursor.getSetting();
+                    cursor.moveToNext();
+                }
+            }
+        }
+        finally {
+            cursor.close();
+        }
     }
 
-/*    public void removeSetting(Setting set) {
-        String[] whereValue = { String.valueOf(set.getId()) };
-        db.delete(GameSchema.SettingTable.NAME, GameSchema.SettingTable.Cols.ID + " =?", whereValue);
-    }*/
-
+    public void addSetting() {
+        ContentValues cv = new ContentValues();
+        cv.put(GameSchema.SettingTable.Cols.MAP_HEIGHT, GameData.get().getSetting().getMapHeight());
+        cv.put(GameSchema.SettingTable.Cols.MAP_WIDTH, GameData.get().getSetting().getMapWidth());
+        cv.put(GameSchema.SettingTable.Cols.STARTING_MONEY, GameData.get().getMoney());
+        db.delete(GameSchema.SettingTable.NAME, null,null );
+        db.insert(GameSchema.SettingTable.NAME, null, cv);
+    }
     public void addStatusMenuData() {
         ContentValues cv = new ContentValues();
         cv.put(GameSchema.StatusScreenTable.Cols.CITY_NAME, GameData.get().getCityName());
@@ -169,5 +179,15 @@ public class GameData {
         cv.put(GameSchema.StatusScreenTable.Cols.NUM_RES, GameData.get().getnRes());
         db.delete(GameSchema.StatusScreenTable.NAME, null,null );
         db.insert(GameSchema.StatusScreenTable.NAME, null, cv);
+    }
+
+    public void resetGame() {
+        db.delete(GameSchema.StatusScreenTable.NAME, null,null );
+        db.delete(GameSchema.SettingTable.NAME, null,null );
+    }
+
+    public void addMapData() {
+        ContentValues cv = new ContentValues();
+        //cv.put(GameSchema.MapTable.Cols.RES_BUILD, GameData.get().getGrid().indexOf());
     }
 }

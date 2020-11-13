@@ -82,9 +82,9 @@ public class FragmentStatus extends Fragment {
         //Initial set texts to display on status screen
         cityName.setText("City Name: " + GameData.get().getSetting().getCityName());
         currMoney.setText("Money: " + sMoney);
-        gameTimer.setText("Day: " + nextDay);
-        popDisplay.setText("Population: " + population);
-        eDisplay.setText("Employ Rate: %0");
+        gameTimer.setText("Day: " + GameData.get().getGameTime());
+        popDisplay.setText("Population: " + GameData.get().getPopulation());
+        eDisplay.setText("Employ Rate: %" + GameData.get().getEmploymentRate());
         findWeather();
         timer.start();
 

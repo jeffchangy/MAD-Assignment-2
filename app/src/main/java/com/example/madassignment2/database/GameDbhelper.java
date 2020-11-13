@@ -17,10 +17,10 @@ public class GameDbhelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-/*        db.execSQL("CREATE TABLE " + GameSchema.SettingTable.NAME + "(" +
+        db.execSQL("CREATE TABLE " + GameSchema.SettingTable.NAME + "(" +
                 GameSchema.SettingTable.Cols.MAP_WIDTH + " INTEGER, " +
                 GameSchema.SettingTable.Cols.MAP_HEIGHT + " INTEGER, " +
-                GameSchema.SettingTable.Cols.STARTING_MONEY + " INTEGER)");*/
+                GameSchema.SettingTable.Cols.STARTING_MONEY + " INTEGER)");
 
         db.execSQL("CREATE TABLE " + GameSchema.StatusScreenTable.NAME + "(" +
                 GameSchema.StatusScreenTable.Cols.CURR_MONEY + " INTEGER, " +
@@ -30,6 +30,12 @@ public class GameDbhelper extends SQLiteOpenHelper {
                 GameSchema.StatusScreenTable.Cols.EMPLOYMENT_RATE + " REAL, " +
                 GameSchema.StatusScreenTable.Cols.NUM_RES + " INTEGER, " +
                 GameSchema.StatusScreenTable.Cols.NUM_COMM + " INTEGER)");
+
+        db.execSQL("CREATE TABLE " + GameSchema.MapTable.NAME + "(" +
+                GameSchema.MapTable.Cols.RES_BUILD + " INTEGER, " +
+                GameSchema.MapTable.Cols.COMM_BUILD + " INTEGER, " +
+                GameSchema.MapTable.Cols.ROAD_BUILD + " INTEGER, " +
+                GameSchema.MapTable.Cols.THUMBNAIL + " BLOB)" );
     }
 
     @Override

@@ -52,18 +52,11 @@ public class SettingsMenu extends AppCompatActivity {
             GameData.get().getSetting().setMapHeight(intHeight);
             GameData.get().setMoney(intMoney);
 
+            //create a settings object
+            //Setting set = new Setting(GameData.get().getSetting().getMapWidth(), GameData.get().getSetting().getMapHeight(), GameData.get().getSetting().getInitialMoney());
 
-            //increment the id by +1
-            //GameData.get().getSetting().setId();
-
-            //add to database
-            Setting set = new Setting(GameData.get().getSetting().getMapWidth(),
-                    GameData.get().getSetting().getMapHeight(), GameData.get().getSetting().getInitialMoney());
-
-            //Setting set = new Setting(intWidth, intHeight, intMoney);
-
-            //load setting from database
-            GameData.get().addSetting(set);
+            //add settings to database
+            GameData.get().addSetting();
         }
         //catches input that is not an integer
         catch (NumberFormatException e) {

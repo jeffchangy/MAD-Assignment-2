@@ -14,11 +14,15 @@ public class GameCursor extends CursorWrapper {
         super(cursor);
     }
 
-    public Setting getSetting() {
+    public void getSetting() {
         int width = getInt(getColumnIndex(GameSchema.SettingTable.Cols.MAP_WIDTH));
         int height = getInt(getColumnIndex(GameSchema.SettingTable.Cols.MAP_HEIGHT));
         int money = getInt(getColumnIndex(GameSchema.SettingTable.Cols.STARTING_MONEY));
-        return new Setting(width, height, money);
+        //return new Setting(width, height, money);
+
+        GameData.get().getSetting().setMapWidth(width);
+        GameData.get().getSetting().setMapHeight(height);
+        GameData.get().getSetting().setInitialMoney(money);
     }
 
     public void getStatusMenuData() {
@@ -29,8 +33,6 @@ public class GameCursor extends CursorWrapper {
         String cityName = getString(getColumnIndex(GameSchema.StatusScreenTable.Cols.CITY_NAME));
         int employmentRate = getInt(getColumnIndex(GameSchema.StatusScreenTable.Cols.EMPLOYMENT_RATE));
         int money = getInt(getColumnIndex(GameSchema.StatusScreenTable.Cols.CURR_MONEY));
-        //return new GameData(gameTime, population, nRes, nComm, cityName, employmentRate);
-        System.out.println("cursor class");
 
         GameData.get().setGameTime(gameTime);
         GameData.get().setPopulation(population);
@@ -39,5 +41,9 @@ public class GameCursor extends CursorWrapper {
         GameData.get().setCityName(cityName);
         GameData.get().setEmploymentRate(employmentRate);
         GameData.get().setMoney(money);
+    }
+
+    public void getMapData() {
+
     }
 }

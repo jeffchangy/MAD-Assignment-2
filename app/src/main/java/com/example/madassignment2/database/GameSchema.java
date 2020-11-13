@@ -25,4 +25,15 @@ public class GameSchema {
             public static final String NUM_COMM = "commercial_number";
         }
     }
+
+    public static class MapTable {
+        public static final String NAME = "MapScreen";
+
+        public static class Cols {
+            public static final String RES_BUILD = "residential_building";
+            public static final String COMM_BUILD = "commercial_building";
+            public static final String ROAD_BUILD = "road_building";
+            public static final String THUMBNAIL = "image_building";
+        }
+    }
 }

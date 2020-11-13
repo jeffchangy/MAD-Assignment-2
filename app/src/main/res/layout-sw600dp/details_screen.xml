@@ -97,6 +97,6 @@
     <ImageView
         android:id="@+id/show_image"
         android:layout_width="match_parent"
-        android:layout_height="801dp" />
+        android:layout_height="289dp" />
 
 </LinearLayout>
